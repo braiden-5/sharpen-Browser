@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sharpen Browser</title>
+  <style>
+    body { margin: 0; font-family: Arial; }
+    header { display: flex; padding: 8px; background: #111; color: white; }
+    input { flex: 1; padding: 6px; margin-right: 4px; }
+    button { padding: 6px; margin-right: 4px; }
+    iframe { width: 100%; height: calc(100vh - 44px); border: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <input id="url" placeholder="Enter website (https://example.com)" />
+    <button onclick="go()">Go</button>
+    <button onclick="back()">←</button>
+    <button onclick="forward()">→</button>
+    <button onclick="reload()">⟳</button>
+  </header>
+  <iframe id="view"></iframe>
+
+  <script>
+    const frame = document.getElementById("view");
+    const historyStack = [];
+    let historyIndex = -1;
+
+    function go() {
+      const url = document.getElementById("url").value;
+      if (!url) return;
+
+      const fullUrl = url.startsWith("http") ? url : "https://" + url;
+      frame.src = fullUrl;
+
+      // Update history
+      historyStack.splice(historyIndex + 1);
+      historyStack.push(fullUrl);
+      historyIndex++;
+    }
+
+    function back() {
+      if (historyIndex > 0) {
+        historyIndex--;
+        frame.src = historyStack[historyIndex];
+      }
+    }
+
+    function forward() {
+      if (historyIndex < historyStack.length - 1) {
+        historyIndex++;
+        frame.src = historyStack[historyIndex];
+      }
+    }
+
+    function reload() {
+      frame.src = frame.src;
+    }
+  </script>
+</body>
+</html>
