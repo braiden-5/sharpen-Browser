@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sharpen Browser</title>
+  <style>
+    body { margin: 0; font-family: Arial; }
+    header { display: flex; padding: 8px; background: #111; color: white; }
+    button { margin-right: 6px; }
+    input { flex: 1; padding: 6px; }
+    iframe { width: 100%; height: calc(100vh - 44px); border: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <input id="url" placeholder="example.com" />
+    <button onclick="go()">Go</button>
+  </header>
+
+  <iframe id="view"></iframe>
+
+  <script>
+    function go() {
+      const url = document.getElementById("url").value;
+      document.getElementById("view").src =
+        "/browse?url=" + encodeURIComponent(url);
+    }
+  </script>
+</body>
+</html>
